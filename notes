@@ -1,11 +1,11 @@
 Stuff to cover:
-- webcam input
+- webcam input (not present in 1.8.1release)
 - fullscreen output
 - audio output
-- NumPy
-- 3D
+- NumPy (I have Numeric right now)
+- 3D (PyOpenGL not installed currently)
 - MPEG
-- MIDI
+- MIDI (not present in 1.8.1release)
 
 I have 45 minutes.
 
@@ -24,3 +24,32 @@ so my plan for my talk is to organize it around demos
 (11:06:07 PM) kragen: then spend 5 or 10 minutes demonstrating more complete demos for which the code doesn't fit on the screen in a large font
 (11:06:15 PM) kragen: and then ask for questions
 (11:06:17 PM) kragen: what do you think?
+
+Possible sequence:
+
+- get up a window with something in it
+- make it look cooler (add some alpha?)
+- add some sound (a precanned thing, maybe with mixers)
+- make it respond to the mouse somehow
+- suck in some images and integrate them somehow (redisplay in a loop
+  to animate them?)
+- suck in an MPEG and draw it to the screen in place of the whole demo
+  (this seems to not be working!? MPEG parsing errors? try a more
+  recent pygame)
+- change the MPEG to go to an offscreen surface and blit it in
+  underneath other stuff
+- replace the MPEG with input from the webcam
+- do some kind of interesting computation with 
+
+Possible demos:
+
+- recumbent video
+- recumbent software
+- pygmusic (will I have speakers? Oh shit. I can hold the mic up to
+  the laptop speakers I guess.)
+- a Python version of paths.html (a lot of which is native in Python)
+- rotating polygons
+- klappquadrat
+- a version of Artfall?
+- some kind of harmonic synthesis?
+- my wave-mechanics thing?
