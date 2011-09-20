@@ -1,0 +1,26 @@
+Stuff to cover:
+- webcam input
+- fullscreen output
+- audio output
+- NumPy
+- 3D
+- MPEG
+- MIDI
+
+I have 45 minutes.
+
+Other people’s work?  Can't find any.
+
+http://www.daniweb.com/software-development/python/code/216869
+
+so my plan for my talk is to organize it around demos
+(11:02:23 PM) kragen: I'll start with a really simple PyGame demo. like, the most interesting thing I can do in five lines of code
+(11:02:54 PM) kragen: first display the demo, then display the code
+(11:04:00 PM) kragen: then say, “And it can also do X!”
+(11:04:25 PM) kragen: and add a couple of lines of code (ideally not by typing them while everyone waits) and show the results
+(11:04:53 PM) kragen: and repeat that for, say, 20 or 30 minutes
+(11:05:08 PM) kragen: interspersed with interrogating random audience members
+(11:05:32 PM) kragen: “How do you think you would do Y in PyGame?"
+(11:06:07 PM) kragen: then spend 5 or 10 minutes demonstrating more complete demos for which the code doesn't fit on the screen in a large font
+(11:06:15 PM) kragen: and then ask for questions
+(11:06:17 PM) kragen: what do you think?
