@@ -1,13 +1,14 @@
 #!/usr/bin/python
-import pygame, random
+from pygame import *
+from random import randrange
 
-ww, hh = 1024, 600
-pantalla = pygame.display.set_mode((ww, hh), pygame.FULLSCREEN)
+pantalla = display.set_mode((0, 0), FULLSCREEN)
+ww, hh = pantalla.get_size()
 
 for xx in range(0, ww, 20):
-    pygame.draw.line(pantalla,
-                     (64, 64, 192),
-                     (xx, 20),
-                     (random.randrange(ww), hh - 20),
-                     10)
-    pygame.display.flip()
+    draw.line(pantalla,
+              (64, 64, 192),
+              (xx, 20),
+              (randrange(ww), hh - 20),
+              10)
+    display.flip()
