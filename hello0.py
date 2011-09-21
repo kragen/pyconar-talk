@@ -6,7 +6,7 @@ pantalla = pygame.display.set_mode((ww, hh), pygame.FULLSCREEN)
 
 for xx in range(0, ww, 20):
     pygame.draw.line(pantalla,
-                     random.randrange(2**24), # color
+                     (64, 64, 192),
                      (xx, 20),
                      (random.randrange(ww), hh - 20),
                      10)
