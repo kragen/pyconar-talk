@@ -18,7 +18,8 @@
 
 (defun pctalk-resize-screen ()
   (interactive)
-  (shell-command "xrandr -s 640x480; xrandr -s 1024x600"))
+  (shell-command "xrandr -s 640x480")
+  (shell-command "xrandr -s \"$(xrandr | head -3 | tail -1 | awk '{print $1}')\""))
 
 (defun pctalk-compile-this-buffer ()
   (interactive)
