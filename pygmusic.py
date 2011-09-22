@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Pygmusic: A simple music sequencer in PyGame.  By Kragen Sitaker,
 2007-12-07, 08, 09, 10, 11, and 12.
 
