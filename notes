@@ -53,8 +53,9 @@ Possible demos:
 - rotating polygons
 - klappquadrat
 - a version of Artfall?
-- some kind of harmonic synthesis?
+- D some kind of harmonic synthesis?
 - my wave-mechanics thing?
+- translucent color circles drifting around
 
 Shit.  Compiling current (2009!) PyGame requires libsdl1.2-devel and
 libsmpeg-devel, which has vanished from Ubuntu’s web site.
