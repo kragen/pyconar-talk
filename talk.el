@@ -9,7 +9,7 @@
                            :inverse-video nil :box nil
                            :strike-through nil :overline nil
                            :underline nil :slant normal
-                           :weight bold :height 220
+                           :weight bold :height 140
                            :width normal
                            :family "courier"))))
    '(mode-line ((t (:background "#001111" :foreground "#770000")))))
