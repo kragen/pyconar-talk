@@ -40,11 +40,13 @@
 ;;; pctalk-next-file.  I tried doing it with a single list and an
 ;;; index into the list, but it was just a bad scene.
 
-(defvar pctalk-prev-files nil
+(defconst pctalk-prev-files nil
   "Currently displayed file in the presentation sequence, and previous ones.")
 
-(defvar pctalk-next-files
-  '("hello0.py" "hello1.py" "polygons.py" "pygmusic.py")
+(defconst pctalk-next-files
+  '("hello0.py" "hello1.py" "polygons.py"
+    "sintesis0.py" "sintesis1.py" "sintesis2.py"
+    "pygmusic.py")
   "Files still to display in the presentation.")
 
 (defmacro pctalk-pop (place)
