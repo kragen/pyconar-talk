@@ -1,6 +1,7 @@
 ;;; Elisp for my PyCon Ar presentation.
 
 (defun pctalk-setup ()
+  "Set up the PyCon talk."
   (interactive)
   (custom-set-faces
    '(default ((t (:stipple nil :background "#ffffff" 
@@ -17,13 +18,20 @@
   (pctalk-resize-screen))
 
 (defun pctalk-resize-screen ()
+  "Resize the screen a couple of times to work around an Emacs bug."
   (interactive)
   (shell-command "xrandr -s 640x480")
   (shell-command "xrandr -s \"$(xrandr | head -3 | tail -1 | awk '{print $1}')\""))
 
 (defun pctalk-compile-this-buffer ()
+  "Execute the script in the current buffer in the shell."
   (interactive)
   (shell-command (buffer-file-name)))
+
+;;; These two stacks of filenames form a sequence of files you can
+;;; move back and forth along with pctalk-prev-file and
+;;; pctalk-next-file.  I tried doing it with a single list and an
+;;; index into the list, but it was just a bad scene.
 
 (defvar pctalk-prev-files nil
   "Currently displayed file in the presentation sequence, and previous ones.")
@@ -50,7 +58,8 @@
   "Go to previous file in presentation and run it."
   (interactive)
   (push (pctalk-pop pctalk-prev-files) pctalk-next-files)
-  (if pctalk-prev-files (pctalk-open-current-file)
+  (if pctalk-prev-files 
+      (pctalk-open-current-file)
     (message "Back past first file.")))
 
 (defun pctalk-open-current-file ()
