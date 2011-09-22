@@ -7,7 +7,7 @@ ww, hh = pantalla.get_size()
 
 color = Color(64, 64, 192)
 
-for xx in range(0, ww, 20):
+for xx in range(0, ww, 5):
     h, s, v, a = color.hsva
     color.hsva = xx * 270 / ww, s, v, a
 

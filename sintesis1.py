@@ -17,5 +17,5 @@ init()
 sndarray.make_sound(sinus(440, 4096, tasa) +
                     sinus(880, 4096, tasa)
                     ).play(-1, 0, 20)
-time.delay(1000)
+time.wait(1000)
 

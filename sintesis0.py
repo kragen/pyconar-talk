@@ -14,4 +14,4 @@ theta = arange(n_muestras) * (2*pi * hz / tasa)
 
 sndarray.make_sound((pico * sin(theta)).astype(Int16)
                     ).play(-1, 0, 20)
-time.delay(1000)
+time.wait(1000)
