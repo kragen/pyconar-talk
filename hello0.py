@@ -11,4 +11,4 @@ for xx in range(0, ww, 5):
               (xx, 20),                 # punto de inicio
               (randrange(ww), hh - 20), # punto de terminar
               10)                       # ancho de rayo
-    display.flip()
+    display.flip()                      # para mostrar

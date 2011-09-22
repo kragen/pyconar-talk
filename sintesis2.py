@@ -10,7 +10,7 @@ def sinus(hz, pico, n_muestras):
     theta = arange(n_muestras) * (2*pi * hz / tasa)
     return (pico * sin(theta)).astype(Int16)
 
-mixer.pre_init(tasa, -16, 1)
+mixer.pre_init(tasa, -16, 1)            # 16bit, un canal
 init()
 reloj, sonido = time.Clock(), None
 for ii in range(1, 14):
@@ -21,7 +21,7 @@ for ii in range(1, 14):
 
     nuevo = sndarray.make_sound(muestras)
     if sonido is not None:
-        reloj.tick(1)
-        sonido.fadeout(20)
-    nuevo.play(-1, 2000, 20)
+        reloj.tick(1)                   # max 1 fps
+        sonido.fadeout(20)              # 20ms fadeout
+    nuevo.play(-1, 2000, 20)            # 2000ms max
     sonido = nuevo
