@@ -11,8 +11,8 @@
                            :underline nil :slant normal
                            :weight bold :height 220
                            :width normal
-                           :family "courier")))
-   '(mode-line ((t (:background "white" :foreground "black")))))) ; why does this fail?
+                           :family "courier"))))
+   '(mode-line ((t (:background "#001111" :foreground "#770000")))))
   (scroll-bar-mode 0)
   (pctalk-setup-keys)
   (pctalk-resize-screen))
@@ -21,12 +21,18 @@
   "Resize the screen a couple of times to work around an Emacs bug."
   (interactive)
   (shell-command "xrandr -s 640x480")
+  (pctalk-maxsize-screen))
+
+(defun pctalk-maxsize-screen ()
+  "Resize the screen to max size to work around Emacs or SDL bugs."
+  (interactive)
   (shell-command "xrandr -s \"$(xrandr | head -3 | tail -1 | awk '{print $1}')\""))
 
 (defun pctalk-compile-this-buffer ()
   "Execute the script in the current buffer in the shell."
   (interactive)
-  (shell-command (buffer-file-name)))
+  (shell-command (buffer-file-name))
+  (pctalk-maxsize-screen))
 
 ;;; These two stacks of filenames form a sequence of files you can
 ;;; move back and forth along with pctalk-prev-file and
