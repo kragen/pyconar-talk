@@ -31,6 +31,7 @@
 (defun pctalk-compile-this-buffer ()
   "Execute the script in the current buffer in the shell."
   (interactive)
+  (save-buffer)
   (shell-command (buffer-file-name))
   (pctalk-maxsize-screen))
 
@@ -43,7 +44,7 @@
   "Currently displayed file in the presentation sequence, and previous ones.")
 
 (defvar pctalk-next-files
-  '("hello0.py" "hello1.py")
+  '("hello0.py" "hello1.py" "polygons.py" "pygmusic.py")
   "Files still to display in the presentation.")
 
 (defmacro pctalk-pop (place)
@@ -70,6 +71,7 @@
 
 (defun pctalk-open-current-file ()
   (find-file (car pctalk-prev-files))
+  (delete-other-windows)
   (pctalk-compile-this-buffer))
 
 (defun pctalk-setup-keys ()
