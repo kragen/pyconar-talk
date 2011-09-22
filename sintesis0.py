@@ -9,7 +9,7 @@ tasa = 22050                            # de muestreo
 mixer.pre_init(tasa, -16, 1)            # 16bit, un canal
 init()                                  # porque sin set_mode
 
-hz, pico, n_muestras = 440, 4096, tasa
+hz, pico, n_muestras = 440, 16384, tasa
 theta = arange(n_muestras) * (2*pi * hz / tasa)
 
 sndarray.make_sound((pico * sin(theta)).astype(Int16)
