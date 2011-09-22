@@ -16,7 +16,7 @@ reloj, sonido = time.Clock(), None
 for ii in range(1, 14):
     hz = 440 * pow(2, ii/12.0)
     n_muestras = 512 * tasa // hz
-    muestras = sum(sinus(jj*hz, 4096, n_muestras)
+    muestras = sum(sinus(jj*hz, 512, n_muestras)
                    for jj in [1, 1, 2, 2, 4, 8, 3, 5, 6][:ii])
 
     nuevo = sndarray.make_sound(muestras)

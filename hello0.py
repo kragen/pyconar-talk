@@ -5,7 +5,7 @@ from random import randrange
 pantalla = display.set_mode((0, 0), FULLSCREEN)
 ww, hh = pantalla.get_size()
 
-for xx in range(0, ww, 20):
+for xx in range(0, ww, 5):
     draw.line(pantalla,
               (64, 64, 192),
               (xx, 20),

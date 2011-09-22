@@ -1,11 +1,13 @@
 Stuff to cover:
-- webcam input (not present in 1.8.1release)
-- fullscreen output
-- audio output
-- NumPy (I have Numeric right now)
-- 3D (PyOpenGL not installed currently)
-- MPEG
-- MIDI (not present in 1.8.1release)
+
+-   webcam input (not present in 1.8.1release)
+- D fullscreen output
+- D audio output
+- D NumPy (I have Numeric right now)
+-   3D (PyOpenGL not installed currently, and FUCK missing from 
+    server)
+-   MPEG (not working)
+-   MIDI (not present in 1.8.1release)
 
 I have 45 minutes.
 
