@@ -14,15 +14,15 @@
    '(mode-line ((t (:background "white" :foreground "black")))))) ; why does this fail?
   (scroll-bar-mode 0)
   (pctalk-setup-keys)
-  (resize-screen))                      ; XXX import the definition of resize-screen!
+  (pctalk-resize-screen))
 
-;;; XXX there must be a way to do this without opening the fucking
-;;; compilation window.  But delete-other-windows is good enough for
-;;; now.
+(defun pctalk-resize-screen ()
+  (interactive)
+  (shell-command "xrandr -s 640x480; xrandr -s 1024x600"))
+
 (defun pctalk-compile-this-buffer ()
   (interactive)
-  (compile (buffer-file-name))
-  (delete-other-windows))
+  (shell-command (buffer-file-name)))
 
 (defvar pctalk-prev-files nil
   "Currently displayed file in the presentation sequence, and previous ones.")
@@ -44,7 +44,6 @@
 (defun pctalk-open-current-file ()
   (find-file (car pctalk-prev-files))
   (pctalk-compile-this-buffer))
-
 
 (defun pctalk-setup-keys ()
   (interactive)
