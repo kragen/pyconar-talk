@@ -32,15 +32,26 @@
   '("hello0.py" "hello1.py")
   "Files still to display in the presentation.")
 
+(defmacro pctalk-pop (place)
+  "Like pop, but errors if place is nil."
+  (if (not (symbolp place)) (error "popping nonsymbols unimplemented"))
+  `(if ,place (car (prog1 
+                       ,place 
+                       (setq ,place (cdr ,place))))
+     (error "popping from empty stack %S" ',place)))
+
 (defun pctalk-next-file ()
+  "Go to next file in presentation and run it."
   (interactive)
-  (push (pop pctalk-next-files) pctalk-prev-files)
+  (push (pctalk-pop pctalk-next-files) pctalk-prev-files)
   (pctalk-open-current-file))
 
 (defun pctalk-prev-file ()
+  "Go to previous file in presentation and run it."
   (interactive)
-  (push (pop pctalk-prev-files) pctalk-next-files)
-  (pctalk-open-current-file))
+  (push (pctalk-pop pctalk-prev-files) pctalk-next-files)
+  (if pctalk-prev-files (pctalk-open-current-file)
+    (message "Back past first file.")))
 
 (defun pctalk-open-current-file ()
   (find-file (car pctalk-prev-files))
