@@ -46,6 +46,7 @@
 (defconst pctalk-next-files
   '("hello0.py" "hello1.py" "polygons.py"
     "circles.py"
+    "reloj.py"
     "sintesis0.py" "sintesis1.py" "sintesis2.py"
     "pygmusic.py")
   "Files still to display in the presentation.")
