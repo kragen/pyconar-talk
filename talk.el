@@ -48,6 +48,7 @@
     "circles.py"
     "reloj.py"
     "sintesis0.py" "sintesis1.py" "sintesis2.py"
+    "ondas.py"
     "pygmusic.py")
   "Files still to display in the presentation.")
 
