@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="en-us" />
+<title>instalacion</title>
+</head>
+<body><br
+/>Hola.<br
+/>Este es un lugar para compartir informacion.<br
+/>Asi se pueden pegar URLs, etc.<br
+/><br
+/><b>LOG DE INSTALACION DE MAQUINAS PARA "LA REDONDA"</b><br
+/><br
+/>La lista de paquetes pedidos por dpkg --get-selections esta en <a href="https://gist.github.com/743558">https://gist.github.com/743558</a>.<br
+/><br
+/>Ahora:<br
+/><ul><li>funciona OpenGL porque ya reemplazamos algunas librerias con los de 64 bits</li
+><li>tenemos PureData y Proce55ing instalado<br/><br
+/></li></ul
+><b>PROBLEMAS DE 64BIT</b><br
+/><br
+/>Porque estamos usando amd64, la version de processing que bajamos cuenta con librerias nativas (.so) <b>incompatibles</b>. En vez de recompilar todo del codigo fuente, eligimos reemplazar las pocas librerias nativas que usamos con versiones 64bit. Podes ver la maldita mezcla en <a href="https://gist.github.com/746628">https://gist.github.com/746628</a>.<br
+/><br
+/>En principio solo dos librerías utilizaran librerías nativas:<br
+/><br
+/>OpenGL<br
+/>Serial<br
+/><br
+/>NO USAMOS las librerias rxtx de <a href="http://arduino.cc/pipermail/developers_arduino.cc/2009-April/000813.html">http://arduino.cc/pipermail/developers_arduino.cc/2009-April/000813.html</a> --- crashea.&nbsp;<br
+/>Usamos las versiones del paquete de Ubuntu.<br
+/><br
+/><b>PROBLEMA FULLSCREEN:</b><br
+/><br
+/>No esta soportado openJDK para full screen en linux por tanto usaremoa JAVA de Sun.<br
+/><a href="http://forum.processing.org/topic/sketch-size-eclipse-ubuntu">http://forum.processing.org/topic/sketch-size-eclipse-ubuntu</a><br
+/><br
+/>(El problema se muestra cuando levantamos un sketch OpenGL como Esfera en pantalla completa, nada mas.)<br
+/><br
+/><br
+/><b>DRBL-LIVE</b><br
+/><br
+/>Necesitamos tener la misma configuración en todas las máquinas.<br
+/>Para ello usamos DRBL-live de CloneZilla <a href="http://clonezilla.org/">http://clonezilla.org/</a> para ghosting.<br
+/><br
+/>Saque el imagen en la maquina luisalberto que esta en la casa de diex ahora.<br
+/><br
+/>Linea de comandos para guardar imagen de disco con DRBL-Live:<br
+/><br
+/>/opt/drbl/sbin/ocs-sr -q2 -c -j2 -z1 -i 2000 -p true savedisk "2010-12-16-16-img" "sda"<br
+/><br
+/>(computado por DRBL-Live)<br
+/><br
+/>Necesita unos 10 minutos (la mayoria en escribir, no leer) y 2,4GB para guardar el imagen en mi pendrive, desde presionar el boton reset hasta presionarlo de vuelta, si sacamos 4 minutos mas de explorar problemas con el dispositivo.<br
+/>La imagen esta comprimida con gzip y cuenta con el MBR y una imagen del sistema de archivos comprimido, hecho con partclone.&nbsp; Para que DRBL-Live reconozca el pendrive, yo tenia que enchufarlo para que aparezca en el escritorio, pero sin abrirlo con doble clic. Deberia existir un /dev/sdb1, pero no deberia estar montado si busco en df.&nbsp;<br
+/><br
+/>No reconocio un chip SD enchufado directamente en la maquina luisalberto; parece que era porque el lector de tarjetas de memoria está desconectado del motherboard.<br
+/><br
+/>Pude arrancar Clonezilla Live desde mi pendrive. Tenia que hacer varias cosas distintas que lo que dice en <a href="http://clonezilla.org/liveusb.php">http://clonezilla.org/liveusb.php</a>:<br
+/><br
+/><ul><li>No pude correr el syslinux del makeboot.sh copiado de la imagen del disco, porque es para i386, no amd64. Pero Ubuntu cuenta con syslinux ya instalado. Pero no acepta el parametro -i. Por eso, yo tenia que decir "syslinux /dev/sdb1", nada mas.</li
+><li>hay que configurar el BIOS para "Forced FDD" tipo de emulacion de USB para que el BIOS bootea el pendrive. Esto es en "Advanced, USB devices" o algo asi. (BIOS, Advanced tab, under "‣ USB Configuration", under "‣ USB Mass Storage Device Configuration", set the "Emulation Type")</li
+><li>si Clonezilla Live arranca con el CD DRBL-Live en el CD-ROM, todo funciona muy mal y confuso.</li
+><li>Ya que la imagen esta en el mismo pendrive, tenia que manualmente "sudo mount --bind /live/image /home/partimag" en vez de permitir que Clonezilla Live busque el imagen. (Tenes que elegir el directorio padre de los imagenes, es decir, el directorio que contiene los imagenes.)<br/><br
+/></li></ul
+>2 de la 4 maquinas (bersuit y gustavo) se instalaron bien con Clonezilla Live desde USB. Otra maquina (charly) no quiso bootear del pendrive; dice "Boot Error". (Y la cuarta maquina, por supuesto, es luisalberto, la en que originalmente saquemos el imagen.)<br
+/><br
+/>Charly que no quiso butear el pendrive estoy instalando con un CD del imagen de mi pendrive. Ademas tiene un disco duro de otro tamanio, unos 500GB en vez de 307903MB, y tengo algunos problemas --- hangeo en grub, por ejemplo, y error de sintaxis en grub-install. Bastante raro. Estos problemas son solo con el imagen ISO de DRBL-Live, porque antes yo booteaba la imagen Clonezilla Live del pendrive para instalar. Todo funciona bien con el imagen de Clonezilla Live en un CD. Aca está el error que tiro DRBL-Live:<br
+/><br
+/>*****************************************************.<br
+/>Restoring the first 446 bytes of MBR data, i.e. executable code area, for sda... done!<br
+/>*****************************************************.<br
+/>Found grub partition: /dev/sda1<br
+/>Found grub partition "/dev/sda1", which is on the restored partition list (sda1). Will run grub-install later.<br
+/>Running: grub-install --no-floppy --root-directory=/tmp/hd_img.ZwNMtA /dev/sda<br
+/>grub-probe: error: Cannot open `/boot/grub/device.map'<br
+/>/usr/sbin/grub-install: line 374: [: =: unary operator expected<br
+/>^CWARNING!!! Can NOT find the grub config file "menu.lst" or "grub.conf" in the system cloned!!!<br
+/>Failed to install grub!!!<br
+/><br
+/>Parece que el imágen de DRBL-live que bajé no puede instalar de un imágen confiablemente. Es roto.<br
+/><br
+/><b>INSTALO JDK from SUN</b><br
+/><br
+/>como dice aca<br
+/><a href="http://www.guia-ubuntu.org/index.php?title=Java">http://www.guia-ubuntu.org/index.php?title=Java</a><br
+/><br
+/>$ java -version<br
+/>java version "1.6.0_23"<br
+/>Java(TM) SE Runtime Environment (build 1.6.0_23-b05)<br
+/>Java HotSpot(TM) 64-Bit Server VM (build 19.0-b09, mixed mode)<br
+/><br
+/>La Instalacion de JDK6 from java soluciono el problema de full screen.<br
+/>Ahora fullscreen funciona.<br
+/>De todas maneras aun no desaparecen la barra y el dock&nbsp; ubuntu...<br
+/>:(<br
+/><br
+/>Todavia tenemos algunos problemas; parece que mostrar video en una ventana con SunJDK crashea la pantalla (esto es si tenemos compiz levantado; si lo deshabilitamos no hay problema) y no encuentra la libreria para rxtxSerial para el Arduino.<br
+/><br
+/>Al final, vinculamos librxtxSerial.so desde /usr/lib/jni al /usr/lib/jvm/jdk/jre/lib/amd64/librxtxSerial.so, y asi funciona. No tira excepciones cuando hay errores en abrir el fichero /dev/ttyUSB0, y por eso tuvimos problemas en diagnosticar un problema de permisos...<br
+/>El problema era que hay que agregar al usuario al grupo dialout group<br
+/><br
+/><b>HACER ALGO EN PANTALLA COMPLETA QUE SE LEVANTA AUTOMATICAMENTE</b><br
+/><br
+/>Ubuntu esta configurado para hacer login de "redonda1" automaticamente sin contrasenia. Si configuramos este usuario para correr algun esketch de Proce55ing en modo pantalla completa en vez de una sesion normal de GNOME, tendremos lo que queremos. Pero tenemos que establecer otra cuenta con sudo para mantener la habilidad de administrar la maquina.<br
+/><br
+/>El metodo sera:<br
+/><br
+/>1. Ctrl-Alt-F1 para ir a un terminal virtual con un getty.<br
+/>2. Loguear alla como el otro usuario en modo texto.<br
+/>3. startx -- :1 alla para lanzar un interfaz grafica en terminal virtual #8.<br
+/><br
+/>Despues, sacamos sudo de la cuenta redonda1 y cambiamos su X session para lanzar el sketch.<br
+/><br
+/>Al final, la manera de configurar el usuario asi es:<br
+/><br
+/>1. Ponga el usuario redonda1 en /etc/gdm/custom.conf como AutomaticLogin=redonda1 (Ubuntu ya nos hizo esto)<br
+/>2. Configura el sesion del usuario redonda1 en /home/redonda1/.dmrc a traves de agregar la linea "Session=xsession"<br
+/>3. Ponga un escript en /home/redonda1/.xsession que corre el esketch:<br
+/><br
+/>#!/bin/sh<br
+/>while : ; do /home/redonda1/.processing/processing-1.2.1/examples/Library/OpenGL/Esfera/application.linux/Esfera; sleep 30; done<br
+/><br
+/><b>INSTALACION DE LAS IMAGENES EN LAS OTRAS MAQUINAS</b><br
+/><br
+/>Charly no quiso butear de mi pendrive. Puede ser una<br
+/>diferencia de version de BIOS.&nbsp; También tiene un disco duro de 500GB<br
+/>en vez de unos 300 algo.<br
+/><br
+/>Gustavo era la única sin problemas.<br
+/><br
+/>Bersuit se quejó de algo de su CPU Fan cuando lo arranqué<br
+/>la primera vez, y quiso que presiono el F1.&nbsp; Ya no se queja más de<br
+/>ésto.&nbsp; Puede ser que deberíamos reconfigurar todas para que no se<br
+/>esperan más para F1 cuando hay error?<br
+/><br
+/>Ahora todas están instaladas con Processing y Pure Data, y funcionan<br
+/>todas las cosas que ya probamos.&nbsp; Probé recibir datos seriales de un<br
+/>Arduino de Diex con todas (que ahora está conectado a la primera<br
+/>máquina). Cuando butean, lanzan un esketch de Proce55ing, actualmente<br
+/>Esfera.&nbsp; Las tres en la casa de Jorge ahora están corriendo Memtest86+<br
+/>para verificar que la memoria y las mothers funcionan confiablemente.<br
+/><br
+/>Todavía hay un par de problemas de confiabilidad:<br
+/><br
+/>1. Si una máquina no termina su proceso de buteo, la próxima vez,<br
+/>&nbsp; muestra el menú de GRUB sin timeout.&nbsp; Si reseteás o apagás la<br
+/>&nbsp; máquina durante el buteo, tendrás que conectar un teclado durante<br
+/>&nbsp; el próximo buteo para que se arranque.<br
+/>2. Una vez supuestamente corruptó el sistema de archivos: al intentar<br
+/>&nbsp; de arrancar X, se quejó que no pudo escribir a<br
+/>&nbsp; `/boot/grub/grubenv`, que presumablemente es el lugar en que el<br
+/>&nbsp; sistema operativo indica a GRUB que buteó con éxito. Nunca arrancó<br
+/>&nbsp; X. Al resetear manualmente, `fsck` dijo que corregía unos errores<br
+/>&nbsp; en el sistema de archivos, y se rebuteó espontáneamente, y después<br
+/>&nbsp; todo bien.&nbsp; Puede pasar de vuelta. (Creo que la máquina era gustavo, pero no estoy seguro. Estamos usando ext4fs, que debería evitar que cortes de luz produzcan éste problema, pero si fuera charly, puede ser debido a los problemas de memoria que denuncio en el capítulo "Memtest86+ y el fraude de charly".)<br
+/><br
+/>El #1 debería ser fácil de arreglar (tenemos que descubrir cómo<br
+/>configurar un timeout en éste caso, nada más) pero el #2 puede ser<br
+/>bastante difícil de reproducir y aún más difícil de corregir.<br
+/><br
+/><b>MEMTEST86+ Y EL FRAUDE DE CHARLY</b><br
+/><br
+/>Charly falla memtest86+, en muy poco tiempo cuando esté caliente (50°C de mother) y en pocos minutos cuando esté a sólo 37° al arrancar. Una máquina que falla memtest86+ nunca puede ser muy estable. Éste puede resultar de defectos en el RAM, defectos en la mother, defectos en el CPU, o defectos en el fuente, entre otras cosas. Por no querer romper los sellos, no averiguamos qué parte es lo defectuoso.<br
+/><br
+/>Un vendedor que vende máquinas armadas debería pasar por lo menos 24hs de memtest86+ para saber si hay algun problema así. Para mí, ésto es un nivel muy básico de competencia y honestidad.<br
+/><br
+/>Además todas las máquinas tienen RAM sub-estandar. Según memtest86+, bersuit y gustavo tienen 4 GiB de DDR3 DDR1066, y charly tiene 4GiB de DDR2 DDR800. Pero según el presupuesto, todas iban a contar con 4GiB de RAM DDR3 DDR1333. Ésto parece ser un fraude por parte del vendedor (MarsTech? Ésto es el nombre en los sellos que cierren los gabinetes) que quiso cobrar por RAM DDR1333 y entregar RAM más lento. Pero además, charly cuenta con un disco de 500GB, más que los 320GB del presupuesto y de las otras máquinas. Si el vendedor está tratando de engañar al estado, tiene que prestar mas atención. Todavia no anotamos la configuracion de luisalberto, la que esta en la casa de Diex.<br
+/><br
+/>Según memtest86+, el RAM DDR1066 transfiere a 4214-4215 MB/s, pero el DDR800 a 3980 MB/s.<br
+/><br
+/>Bersuit y gustavo no tienen problemas en memtest86+ a más que 45 minutos, aún con mothers calentado a 45° y 50°, respectivamente. Por eso sabemos que la desconfiabilidad de charly no es por la temperatura. Luisalberto corria toda la noche sin problemas de Memtest86+.<br
+/><br
+/>Éstas temperaturas de las mothers son de un día de 28°C; por eso no es una cuestión de condiciones climaticas malas.<br
+/><br
+/>Charly también tiene una versión distinta del BIOS que bersuit y gustavo; charly tiene BIOS v02.61 version 0504, y bersuit y gustavo tienen BIOS v02.61 version 0503. Ésto probablemente explica la falla de butear de USB en charly.<br
+/><br
+/>Cuando arrancamos charly frio, a 30°, pasa Memtest86+ por casi 4 minutos hasta que falla en el test #4. Al rearrancar, parece que en los pocos minutos, la mother calento hasta 39°, y este provocó la falla.<br
+/><br
+/>Por eso, si alguien quiera reproducir el error, probablemente tenga que correr Memtest86+ por varios minutos hasta que llega a mas o menos 40° para provocar la falla. La memoria parece funcionar perfectamente hasta que esté caliente.<br
+/><br
+/>Además en el tema de fraude y engaño, el vendedor decía que iban a entregar las máquinas con Linux ya instalado. Lo que instalaron era un Ubuntu 9.04 de 32 bits, una versión de 20 meses de edad, tan viejo que ya no hay actualizaciones de seguridad, y además que no soporte el Ethernet integrado en el mother. Teníamos que instalar de nuevo para que el Ethernet arranca y para que pueda correr binarios de 64 bits (aúnque parece que al final hubiera sido menos dolor usar un sistema operativo de 32 bits.)<br
+/><br
+/><br
+/><b>PROCESSING</b><br
+/><br
+/>Pruebas con GLGraphics + GSVideo<br
+/><br
+/>en resolucion de 1920 x 1080 no alcanza a correr en realtime<br
+/>La solucion es renderear los clips a media resolucion (680 x 384)<br
+/>CODECS: los codecs sin compresion cruzan los colores y se ve cruzado azul y rojo<br
+/>probamos:<br
+/>PNG&nbsp;&nbsp; &gt;&gt;&gt; cruza los colores<br
+/>TGA&nbsp;&nbsp; &gt;&gt;&gt; no hay codec<br
+/>TIFF&nbsp; &gt;&gt;&gt; cruza los colores<br
+/><br
+/>chekout: <a href="http://forum.processing.org/topic/gsvideo-pipeline-color-issue">http://forum.processing.org/topic/gsvideo-pipeline-color-issue</a><br
+/><br
+/><br
+/><br
+/>alpha blending using glsl: <a href="http://forum.processing.org/topic/glgraphicsoffscreen-and-seperate-alpha-for-stereoscopic-3d-glgraphics">http://forum.processing.org/topic/glgraphicsoffscreen-and-seperate-alpha-for-stereoscopic-3d-glgraphics</a><br
+/><br
+/><br
+/>TODO DIEX:<br
+/>ver tema videos&nbsp;<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RENDERS<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ALPHA<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VELOCIDAD<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mandar data por OSC<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br
+/><b>PROBLEMA DE COLOR:</b><br
+/>El problema de color es debido a una configuracion defectuosa del driver de la placa nVidia.<br
+/>Por el momento no tengo solucion.<br
+/>Ver aca:<br
+/><br
+/><a href="http://www.wiredrevolution.com/ubuntu/fix-blue-tinted-video-in-ubuntu">http://www.wiredrevolution.com/ubuntu/fix-blue-tinted-video-in-ubuntu</a><br
+/><br
+/>pero esto no es el problema que tenemos, dado que nuestro problema no ocurre con totem ni mplayer, unicamente con Proce55ing.<br
+/><br
+/>y aca un post mas desarrollado al respecto:<br
+/><a href="https://bugs.launchpad.net/totem/+bug/395476">https://bugs.launchpad.net/totem/+bug/395476</a><br
+/><br
+/>Esto parece mas parecido: <a href="http://forum.processing.org/topic/gsvideo-pipeline-color-issue">http://forum.processing.org/topic/gsvideo-pipeline-color-issue</a><br
+/><br
+/>No estoy del todo seguro para ponerme a probar esas opciones.<br
+/>Probe solo la del primer post y no resolvio el problema<br
+/>Estoy intentando contactarme con el programador de la libreria de video para ver que solucion me puede dar.<br
+/>Cuando probe los ejemplos no note el cambio de color.<br
+/>Lo que no recuerdo es si en algun momento se vieron los clips ok en la maquina.<br
+/>Ahora estoy probando con la version en h264 y tambien se ve con los colores cruzados.<br
+/><br
+/>Por ahora Diex simplemente va a cruzar los colores en After Effects, una engaña pichanga pero bueno.<br
+/><br
+/>Usando AFTER EFFECTS &gt;&gt;&gt; Adjustment Layer &gt;&gt;&gt;Set Channels:<br
+/>Cruzo rojo por azul y listo !!!&nbsp; ☺<br
+/><br
+/><br
+/>ERROR: Caught a segmentation fault while loading plugin file:<br
+/>/usr/lib/gstreamer-0.10/libgstffmpeg.so<br
+/><br
+/>Please either:<br
+/>- remove it and restart.<br
+/>- run with --gst-disable-segtrap and debug.<br
+/><br
+/>Uhoh. Siempre pasa? Si es algo aleatorico que haga que el esketch salga con excepcion, no es un gran problema. Pero no pasaba antes, ¿o sí?<br
+/><br
+/><br
+/><b>PROBLEMA SERIAL EVENT Exception</b><br
+/><br
+/>estaba mal la evaluacion:<br
+/>if (inString != null &amp;&amp; <b>(</b>inString.charAt(0) == '-' || inString.charAt(0) == '+'<b>)</b> ){<br
+/>&nbsp;&nbsp;&nbsp; //blabla...<br
+/>&nbsp;&nbsp;&nbsp; }<br
+/>&nbsp;&nbsp;&nbsp;&nbsp;<br
+/>&nbsp;&nbsp;&nbsp; el parentesis da precedencia.<br
+/>&nbsp;&nbsp;&nbsp; entonces si no esta, evalua el inString != null pero despues evalua inString.charAt.<br
+/>&nbsp;&nbsp;&nbsp; entonces tira el null pointer exception<br
+/><br
+/><b>PROBLEMAS TODAVIA PARA RESOLVER</b><br
+/><br
+/>(para el escenario del recumbent)<br
+/><ul><li>extrapolacion de velocidad</li
+><li>intervenciones<ul><li>mOVIMIENTO EN EL ESPACIO Y CAMBIO DE TAMANO, GIRO</li
+><li>oscurecimiento del paisaje</li
+><li>optativo &gt; personaje en alpha</li></ul
+></li
+><li>audio<ul><li>reproducir un archivo de audio por paisaje y uno por intervencion (crescendo?)</li></ul
+></li
+><li>secuencias de escenarios</li
+><li>para el eliptico:<ul><li>camara&gt;probar posibilidades</li
+><li>reproducir dos audios *uno para atras y uno para adelante</li></ul
+></li
+><li>para la bicicleta<ul><li>probarla con la bici</li
+><li>audio</li
+><li><br/></li
+><li>CHARLY:</li
+><li>Login en Bicicleta &gt;&gt;&gt; sleep de 30 arranca el sketch pero sin audio</li
+><li>aumentar el timeOut a 60 segs. tampoco soluciono el problema del audio.</li
+><li>Solo inicia el audio si se reinicia el sketch de processing</li
+><li><br/><br/><br
+/></li></ul
+></li></ul
+><b>MODIFICACIONES FEBRERO:</b><br
+/><br
+/>resolvimos tema eliptico con bajo framerate.<br
+/>El problema no era la camara sino el sketch de processing que tenia un bloqueo de frameRate.<br
+/><br
+/><br
+/><br
+/><br
+/></body>
+</html>
