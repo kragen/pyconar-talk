@@ -14,7 +14,7 @@ while event.poll().type not in (MOUSEBUTTONDOWN, QUIT):
 
     puntos = [(ww/2 + sin(ii * theta) * r, # x
                hh/2 - cos(ii * theta) * r) # y
-              for ii in range(3 + theta // (2 * pi))]
+              for ii in range(3 + int(theta / (2 * pi)))]
 
     pantalla.fill(0)                    # llenar con negro
     draw.polygon(pantalla, color, puntos)
