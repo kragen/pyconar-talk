@@ -9,7 +9,7 @@
                            :inverse-video nil :box nil
                            :strike-through nil :overline nil
                            :underline nil :slant normal
-                           :weight bold :height 100
+                           :weight bold :height 300
                            :width normal
                            :family "courier"))))
    '(mode-line ((t (:background "#001111" :foreground "#770000")))))
@@ -44,7 +44,9 @@
   "Currently displayed file in the presentation sequence, and previous ones.")
 
 (defconst pctalk-next-files
-  '("hello0.py" "hello1.py" "polygons.py"
+  '("helloneg1.py" "hellonegmedio.py" "hellonegcuarto.py"
+    "hello0.py" "hello1.py"
+    "polygons.py"
     "circles.py"
     "reloj.py"
     "sintesis0.py" "sintesis1.py" "sintesis2.py"

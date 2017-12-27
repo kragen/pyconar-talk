@@ -15,7 +15,8 @@ while True:
     elif ev.type == MOUSEMOTION:
         _, yy = ev.pos                  # posicion
         continue
-        
+    time.delay(33)
+
     xx += 23
     if xx > ww:
         xx -= ww

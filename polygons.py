@@ -20,3 +20,4 @@ while event.poll().type not in (MOUSEBUTTONDOWN, QUIT):
     draw.polygon(pantalla, color, puntos)
 
     display.flip()
+    time.delay(15)

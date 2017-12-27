@@ -28,7 +28,7 @@
 # current time (so you have to take it mod 2*pi) and that you have to
 # manually convert each scalar to a single-precision float.
 
-import pygame, sys, Numeric, time, math
+import pygame, sys, numpy, time, math
 
 twopi = 2 * math.pi
 
@@ -47,18 +47,18 @@ class World:
         # of the 'ys' array is [0, 0, 0, 0...], while row 1 is [1, 1,
         # 1, 1...].  This is somewhat confused by the default Python
         # display of these guys being transposed if you print them out.
-        (self.xs, self.ys) = (xs, ys) = Numeric.indices((width, height))
+        (self.xs, self.ys) = (xs, ys) = numpy.indices((width, height))
         # Now we want an array of radii (hi Andy).  So we 
         from_center_x = xs - width / 2
         from_center_y = ys - height / 2
-        self.r = (Numeric.sqrt(from_center_x ** 2 + from_center_y ** 2)
+        self.r = (numpy.sqrt(from_center_x ** 2 + from_center_y ** 2)
                         /
-                  (width/64)).astype(Numeric.Float32)
+                  (width/64)).astype(numpy.float32)
         self.tmp = self.r.copy()  # temp space for later (to reduce per-frame allocation)
 
         masks = self.screen.get_masks()[0:3]
         # Lookup table for grayscale levels.
-        self.palette = Numeric.array([grayscale_for_masks(masks, level/256.0)
+        self.palette = numpy.array([grayscale_for_masks(masks, level/256.0)
                                         for level in range(256)])
     def add_second_wave(self, to_what): pass
     def peak(self): return 1.01  # was getting occasional overflow errors on y1
@@ -67,8 +67,8 @@ class World:
         # in order to cut down on the number of intermediate result
         # spaces that must be allocated.
         tmp = self.tmp                  # to make code briefer
-        N = Numeric
-        f32 = lambda x: N.array(x, N.Float32)
+        N = numpy
+        f32 = lambda x: N.array(x, N.float32)
         # tmp gets -time.time() + self.r
         N.add(f32(-time.time() % twopi), self.r, tmp)
         # tmp gets sin(tmp), i.e. sin(r - time)
@@ -79,7 +79,7 @@ class World:
         # tmp gets tmp * (256/ (2*peak)), i.e. (1 + sin(r-time))/2 * 256
         N.multiply(tmp, f32(256 / (self.peak()*2)), tmp)
         # round floats to Int8 so we can look things up in palette
-        ints = tmp.astype(N.Int8)
+        ints = tmp.astype(N.int8)
         # Look up the pixel value for each grayscale level in the palette
         grayscale = N.take(self.palette, ints)
         # I tried using surfarray.pixels2d and blitting from there,
@@ -93,17 +93,17 @@ class World2Waves(World):
         # Center our second set of waves at the upper left-hand corner
         # of the screen instead of the middle, and give it twice as
         # long a wavelength
-        self.r2 = (Numeric.sqrt(self.xs ** 2 + self.ys ** 2)
+        self.r2 = (numpy.sqrt(self.xs ** 2 + self.ys ** 2)
                               /
-                   (screen.get_width()/32)).astype(Numeric.Float32)
+                   (screen.get_width()/32)).astype(numpy.float32)
         self.tmp2 = self.r.copy()
     def add_second_wave(self, to_what):
         # our second wave travels slower by a factor of e
-        Numeric.add(Numeric.array(-time.time() / Numeric.e % twopi,
-                                  Numeric.Float32),
+        numpy.add(numpy.array(-time.time() / numpy.e % twopi,
+                              numpy.float32),
                     self.r2, self.tmp2)
-        Numeric.sin(self.tmp2, self.tmp2)
-        Numeric.add(self.tmp2, to_what, to_what)
+        numpy.sin(self.tmp2, self.tmp2)
+        numpy.add(self.tmp2, to_what, to_what)
     def peak(self): return 2
 
 def main(argv):

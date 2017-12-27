@@ -15,7 +15,7 @@ http://canonical.org/~kragen/demo/klappquadrat.html
 """
 
 import pygame, sys
-from Numeric import zeros, subtract, array, arange, where, take, shape, indices
+from numpy import zeros, subtract, array, arange, where, take, shape, indices, int64, int32
 
 screensize = (320, 200)
 ncolors = 256
@@ -40,7 +40,7 @@ def main(argv):
     pygame.init()
     screen = pygame.display.set_mode(screensize, pygame.FULLSCREEN)
 
-    buf = zeros(screensize)
+    buf = zeros(screensize, int32)
     fiery_rgb_integers = clamp(0, subtract.outer(arange(ncolors) + ncolors/8,
                                                  ((array([0, 1, 2]) * ncolors)
                                                   / 4)),
@@ -58,6 +58,7 @@ def main(argv):
             frames += 1
             redraw(screen, buf, palette, frames)
             pygame.display.flip()
+            pygame.time.delay(67)
         elif ev.type == pygame.KEYDOWN: break
         elif ev.type == pygame.QUIT: break
 
